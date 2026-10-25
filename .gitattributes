@@ -1,0 +1,11 @@
+/.github export-ignore
+/tests export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.php-cs-fixer.dist.php export-ignore
+/phpstan.neon.dist export-ignore
+/phpunit.xml.dist export-ignore
+/run-docker.sh export-ignore
+/Dockerfile export-ignore
+/SUBMISSION.md export-ignore
+/.phpunit.result.cache export-ignore

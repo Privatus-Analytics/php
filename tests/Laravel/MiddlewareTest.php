@@ -16,6 +16,13 @@ final class MiddlewareTest extends TestCase
         self::assertSame((string) strlen($body), $response->headers->get('Content-Length'));
     }
 
+    public function testAddsNothingWhenTheTagIsOffEvenWithTheQueueStub(): void
+    {
+        config(['privatus.enabled' => false, 'privatus.queue_stub' => true]);
+
+        self::assertSame('<html><head><title>Plain</title></head><body>Hi</body></html>', $this->get('/plain')->getContent());
+    }
+
     public function testDoesNotAddASecondTag(): void
     {
         $this->enable();

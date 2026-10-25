@@ -9,3 +9,5 @@
 /Dockerfile export-ignore
 /SUBMISSION.md export-ignore
 /.phpunit.result.cache export-ignore
+/example export-ignore
+/.dockerignore export-ignore

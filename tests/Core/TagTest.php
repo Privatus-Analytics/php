@@ -158,6 +158,39 @@ final class TagTest extends TestCase
         self::assertStringStartsWith('<script nonce="abc">window.privatus=', $this->tag(['queue_stub' => true, 'nonce' => 'abc']));
     }
 
+    public function testOffWithTheQueueStubPrintsOnlyTheStub(): void
+    {
+        $called = false;
+        $props = static function () use (&$called): array {
+            $called = true;
+
+            return ['plan' => 'pro'];
+        };
+
+        self::assertSame(
+            '<script nonce="abc">' . QueueStub::JAVASCRIPT . '</script>',
+            $this->tag(['enabled' => false, 'queue_stub' => true, 'nonce' => 'abc', 'props' => $props]),
+        );
+        self::assertFalse($called, 'the props closure must not run when the tag is off');
+        self::assertSame(
+            '<script>' . QueueStub::JAVASCRIPT . '</script>',
+            $this->tag(['enabled' => null, 'environment' => 'local', 'queue_stub' => true]),
+        );
+    }
+
+    public function testOffWithoutTheQueueStubPrintsNothing(): void
+    {
+        self::assertSame('', $this->tag(['enabled' => false, 'queue_stub' => false, 'nonce' => 'abc', 'props' => ['plan' => 'pro']]));
+    }
+
+    public function testNoSiteIdWithTheQueueStubPrintsOnlyTheStub(): void
+    {
+        self::assertSame(
+            '<script nonce="abc">' . QueueStub::JAVASCRIPT . '</script>',
+            $this->tag(['site_id' => null, 'queue_stub' => true, 'nonce' => 'abc', 'props' => ['plan' => 'pro']]),
+        );
+    }
+
     public function testNeverPrintsCookiesOrRequests(): void
     {
         $html = $this->tag(['queue_stub' => true, 'props' => ['plan' => 'pro']]);

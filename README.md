@@ -208,7 +208,7 @@ return [
 | `extra_attributes` | `[]` | Any other `data-*` attribute |
 | `nonce` | the framework's own | Content Security Policy nonce for the script tags. Laravel uses `Vite::cspNonce()` |
 | `props` | `null` | Page properties. See [Product analytics](#product-analytics-see-which-features-people-use) |
-| `queue_stub` | `false` | Prints a small script so `privatus.track()` works before the tracker loads |
+| `queue_stub` | `false` | Prints a small script so `privatus.track()` works before the tracker loads. It still prints when the tag is off, so those calls never fail |
 
 Each tracker attribute is explained in the [script attributes
 reference](https://privatusanalytics.com/docs/tracker/attributes), and the
@@ -410,6 +410,12 @@ It prints this before the tag (with your nonce, if you have one):
 <script>window.privatus=window.privatus||{q:[]};['track','pageview','props','optOut','optIn','ready'].forEach(function(m){window.privatus[m]=window.privatus[m]||function(){window.privatus.q.push([m,Array.prototype.slice.call(arguments)])}})</script>
 ```
 
+The queue script prints even where the tag is off (in development, with
+`enabled` set to `false`, or with no site id). Then only the queue script
+prints: no tracker and no page properties. So you can always call
+`privatus.track(...)`. In development the calls just wait in the queue and
+are never sent. The middleware adds nothing when the tag is off.
+
 See the [JavaScript API docs](https://privatusanalytics.com/docs/tracker/javascript-api).
 
 ### Naming events
@@ -433,6 +439,15 @@ The script sets no cookies and stores nothing in the browser. This package
 sends nothing from your server. See the [privacy
 documentation](https://privatusanalytics.com/docs/privacy) for what is
 collected.
+
+If you have a privacy policy, it should say which tools handle your visitors' data. You can paste this:
+
+> This website uses [Privatus Analytics](https://privatusanalytics.com/privacy-analytics) to count visits. It
+> does not use cookies and does not follow you from one website to another. Your IP address is used for a moment
+> to count visits and is never stored.
+
+Change it to fit your site. The [privacy policy generator](https://privatusanalytics.com/tools/privacy-policy-generator)
+makes a longer version with your site's name in it.
 
 ## Development
 

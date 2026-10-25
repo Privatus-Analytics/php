@@ -86,6 +86,17 @@ final class BladeTest extends TestCase
         self::assertSame('<html><head></head><body></body></html>', trim((string) $this->get('/component')->getContent()));
     }
 
+    public function testTheDirectivePrintsOnlyTheQueueStubWhenOff(): void
+    {
+        Vite::useCspNonce('nonce123');
+
+        self::assertSame(
+            '<script nonce="nonce123">' . \Privatus\Analytics\QueueStub::JAVASCRIPT . '</script>',
+            Blade::render("@privatusAnalytics(['enabled' => false, 'queue_stub' => true, 'props' => ['plan' => 'pro']])"),
+        );
+        self::assertSame('', Blade::render("@privatusAnalytics(['enabled' => false, 'props' => ['plan' => 'pro']])"));
+    }
+
     public function testTheViteNonceIsUsed(): void
     {
         $this->enable();

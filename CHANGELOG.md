@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Changed: with `queue_stub` on, a tag that is off (outside production, `enabled` set to `false`, or no site id)
+  now prints the queue script and nothing else, so `privatus.track(...)` calls in your own JavaScript never fail.
+  Before, it printed nothing. With `queue_stub` off it still prints nothing. The middleware still adds nothing
+  when the tag is off.
+- Added `example/`, a small Laravel app for the conformance tests.
+
 ## 1.0.0 - 2026-10-25
 
 - Initial release.

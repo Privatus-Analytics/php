@@ -27,7 +27,8 @@ class InjectPrivatusAnalytics
     {
         $response = $next($request);
 
-        if ($response instanceof Response && $this->shouldInject($request, $response)) {
+        // A tag that is off inserts nothing, not even the queue stub.
+        if ($response instanceof Response && $this->privatus->enabled() && $this->shouldInject($request, $response)) {
             $html = HtmlInjector::inject((string) $response->getContent(), (string) $this->privatus->tag());
             if ($html !== null) {
                 $response->setContent($html);

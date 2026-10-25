@@ -7,7 +7,8 @@ namespace Privatus\Analytics;
 use Closure;
 
 /**
- * Builds the tracking script tag. Returns '' when no tag should print.
+ * Builds the tracking script tag. When the tag is off it prints only the queue stub
+ * (with queue_stub on) or nothing.
  *
  *   echo (new Tag(new Config(siteId: 'pa_YOURSITEID', enabled: true)))->render();
  *   // <script defer src="https://privatusstats.com/js/pa.js" data-site="pa_YOURSITEID"></script>
@@ -38,17 +39,23 @@ final class Tag implements \Stringable
         return $this->config->siteId() !== null && $this->config->isEnabled();
     }
 
-    /** The queue script, the page properties script and the tracker tag, in that order. */
+    /**
+     * The queue script, the page properties script and the tracker tag, in that order.
+     *
+     * When the tag is off (disabled, or no site id) and queue_stub is on, only the queue
+     * script prints, so privatus.track() calls in your own JavaScript never fail. With
+     * queue_stub off it prints nothing.
+     */
     public function render(): string
     {
-        if (!$this->shouldRender()) {
-            return '';
-        }
-
         $html = '';
         if ($this->config->queueStub) {
             $html .= QueueStub::render($this->config->nonce);
         }
+        if (!$this->shouldRender()) {
+            return $html;
+        }
+
         $html .= PageProps::script($this->props(), $this->config->nonce);
 
         return $html . '<script ' . Html::attributes($this->attributes()) . '></script>';

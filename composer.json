@@ -76,6 +76,8 @@
             "/vendor",
             "/build",
             "/tests",
+            "/example",
+            "/.dockerignore",
             "/.github",
             "/Dockerfile",
             "/run-docker.sh",

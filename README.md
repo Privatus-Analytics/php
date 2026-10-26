@@ -1,21 +1,46 @@
 # Privatus Analytics for PHP
 
-Adds the cookieless [Privatus Analytics](https://privatusanalytics.com)
-tracking script to PHP apps. It works with plain PHP, has a Laravel package
-(Blade directives, a Blade component and an optional middleware), and has a
-Twig extension for Symfony and other Twig apps.
+**Simple, private website analytics for your PHP app. No cookies, honest numbers,
+and a dashboard you understand in seconds.**
 
-Privatus Analytics counts visits, sources, pages and conversions without
-cookies, browser storage or fingerprinting (guessing who someone is from their
-device). So, in many countries, analytics alone does not mean you must ask
-visitors for permission first. Rules differ by country, so check with your own
-lawyer.
+## Why Privatus Analytics
 
-The package only prints HTML: the browser script tag and some HTML attributes.
-It never sends events from your server, sets no cookies, and never reads or
-stores IP addresses or other details about visitors. You need a Privatus
-Analytics account to see reports, and there is a free plan. Sign up at
-https://privatusanalytics.com.
+**Google Analytics is slow, confusing and hungry for data.** It sends what your
+visitors do to Google. In many countries it means showing a cookie pop-up (the box
+that asks visitors to accept cookies), and many people click "reject", so you never
+see them. Bots pad the numbers that are left.
+
+**Privatus Analytics fixes that.** It counts visits to your PHP app without cookies and
+never stores IP addresses. Bots are filtered out before they are counted. Your
+data is never sold or shared.
+
+What you get:
+
+- **A dashboard you understand in seconds.** Visitors, top pages and where people
+  came from, all on one screen.
+- **No cookie pop-up needed for our analytics.** We set no cookies and store no
+  personal data. Laws differ by country, so check your own legal advice.
+- **Honest numbers.** Known bots and fake traffic are left out on every plan.
+- **A fast site.** The tracking script is about 3 KB, tiny next to most tracking tags.
+- **Data you own.** We never sell it or show you ads, and you can pull it out
+  any time through the API.
+
+**Start free.** The Free plan has 10,000 events a month and 3 sites, with no card.
+Every new account also gets 14 days of Pro free, with no card.
+[Create your account](https://privatusanalytics.com).
+
+## What this package does
+
+- Works with plain PHP.
+- A Laravel package: Blade directives, a Blade component and an optional
+  middleware.
+- A Twig extension for Symfony and other Twig apps.
+- The package only prints HTML: the browser script tag and some HTML
+  attributes. It never sends events from your server, sets no cookies, and
+  never reads or stores IP addresses or other details about visitors.
+
+You need a Privatus Analytics account to see your reports, and there is a
+free plan. [Sign up at privatusanalytics.com](https://privatusanalytics.com).
 
 ## Requirements
 
@@ -386,7 +411,7 @@ characters `<`, `>` and `&` are escaped, so a value can never break out of the
 script.
 
 **Never put names, emails, user ids or anything else that points to one
-person in page properties.** Privatus counts visitors without any id. Put
+person in page properties.** Privatus Analytics counts visitors without any id. Put
 groups (plan, role), not people. The server also removes emails and long ids
 it finds.
 
